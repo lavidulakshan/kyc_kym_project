@@ -1,0 +1,540 @@
+html, body {
+  overflow-x: hidden; /* Prevent horizontal overflow globally */
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  width: 100%; /* Ensures the container does not exceed the viewport width */
+  max-width: 100%; /* Prevents any excess width */
+}
+
+/* Ensure specific elements are responsive */
+img {
+  max-width: 100%; /* Images will not exceed their container */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.step-item, .service-item {
+  width: 100%; /* Use full width on small devices */
+}
+
+/* Additional media queries for smaller screens */
+@media (max-width: 768px) {
+  .step-item {
+    flex: 1 1 100%; /* Allow items to take full width */
+  }
+
+  .steps-container {
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items */
+  }
+
+  .features .row {
+    flex-wrap: wrap; /* Allow items to wrap onto the next line */
+  }
+
+  .card {
+    flex: 1 1 100%; /* Make cards take full width on small devices */
+    margin: 10px 0; /* Add some margin for spacing */
+  }
+}
+
+@media (min-width: 576px) {
+  .card {
+    flex: 1 1 45%; /* Two cards side by side on small devices */
+  }
+}
+
+@media (min-width: 768px) {
+  .card {
+    flex: 1 1 22%; /* Four cards side by side on medium devices */
+  }
+}
+
+/* Hover effects */
+.card:hover {
+  transform: scale(1.05); /* Scale effect on hover */
+  transition: transform 0.3s; /* Smooth transition */
+}
+
+/* Step styling */
+.step-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #007bff;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+}
+
+.arrow {
+  font-size: 2rem;
+  color: #007bff;
+  margin: 0 20px;
+}
+
+/* Card and service item styles */
+.service-item, .card {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.service-item:hover, .card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .step-circle {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .arrow {
+    font-size: 1.5rem;
+  }
+}
+
+
+
+
+
+
+
+
+
+.card {
+  flex: 1 1 100%; /* Full width on mobile */
+  margin: 10px; /* Add margin for spacing */
+  transition: transform 0.3s, box-shadow 0.3s; /* Smooth transition */
+}
+
+/* For larger screens, ensure cards are equal height */
+@media (min-width: 576px) {
+  .card {
+    flex: 1 1 45%; /* Two cards side by side on small devices */
+  }
+}
+
+@media (min-width: 768px) {
+  .card {
+    flex: 1 1 22%; /* Four cards side by side on medium devices */
+  }
+}
+
+/* Hover effect for cards */
+.card:hover {
+  transform: translateY(-5px); /* Slightly lift the card */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Add a more pronounced shadow */
+}
+
+.steps-container {
+  display: flex;
+  justify-content: center; /* Center items */
+  align-items: center; /* Align items vertically */
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the text and circle */
+  text-align: center; /* Center text */
+  margin: 0 10px; /* Add horizontal spacing */
+}
+
+.step-circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px; /* Fixed width */
+  height: 50px; /* Fixed height */
+  border-radius: 50%;
+  background-color: #007bff; /* Circle color */
+  color: white; /* Text color */
+  font-weight: bold;
+  margin-bottom: 5px; /* Space between circle and text */
+}
+
+.arrow {
+  font-size: 2rem; /* Adjust size of the arrow */
+  color: #007bff; /* Arrow color */
+  margin: 0 10px; /* Add margin for spacing */
+  transition: transform 0.3s; /* Smooth transition */
+}
+
+.arrow:hover {
+  transform: scale(1.2); /* Scale effect on hover */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .step-item {
+    margin: 0 5px; /* Reduce margin on smaller screens */
+  }
+  
+  .step-circle {
+    width: 40px; /* Smaller circle */
+    height: 40px; /* Smaller circle */
+  }
+  
+  .arrow {
+    font-size: 1.5rem; /* Smaller arrow size */
+  }
+}
+.partners {
+  padding: 40px 0;
+  background-color: #f1f5f9; /* Light background for contrast */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.partner-logos {
+  display: flex;
+  justify-content: center; /* Center logos */
+  gap: 20px; /* Space between logos */
+}
+
+.logo {
+  transition: transform 0.3s ease, filter 0.3s ease; /* Animation effects */
+  max-width: 100%; /* Responsive logos */
+  filter: brightness(0) invert(1); /* Invert colors for white logos on light background */
+}
+
+.logo:hover {
+  transform: scale(1.1); /* Slightly enlarge on hover */
+  filter: brightness(1) invert(1); /* Return to original color on hover */
+}
+
+/* Adjust logo size for different screens */
+@media (max-width: 768px) {
+  .logo {
+    max-width: 80%; /* Reduce logo size on smaller screens */
+  }
+}
+
+.faq {
+  padding: 40px 0;
+  background-color: #f1f5f9; /* Light background */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.faq-item {
+  background-color: #fff; /* White background for FAQ items */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners for items */
+  margin-bottom: 20px; /* Space between items */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation effects */
+}
+
+.faq-item h3 {
+  color: #007bff; /* Blue color for headings */
+}
+
+.faq-item:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .faq-item {
+    padding: 15px; /* Adjust padding for smaller screens */
+  }
+}
+
+.contact-us {
+  padding: 40px 0;
+  background-color: #f1f5f9; /* Light background */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.contact-info {
+  margin-bottom: 20px; /* Space below contact info */
+}
+
+.contact-item {
+  background-color: #fff; /* White background for items */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners for items */
+  text-align: center; /* Center text */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation effects */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  margin: 15px; 
+}
+
+.contact-item h3 {
+  color: #007bff; /* Blue color for headings */
+}
+
+.contact-item:hover {
+  transform: translateY(-5px); /* Slight lift on hover */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Stronger shadow on hover */
+}
+
+.contact-form {
+  background-color: #fff; /* White background for form */
+  padding: 20px;
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+.contact-form .form-control {
+  margin-bottom: 15px; /* Space between inputs */
+}
+
+.contact-form button {
+  width: 100%; /* Full width button */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .contact-item {
+    padding: 15px; /* Adjust padding for smaller screens */
+  }
+}
+
+
+.contact-form {
+  max-width: 700px; /* Increase the max width for larger screens */
+  margin: 0 auto; /* Center the form */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.message-box {
+  resize: none; /* Disable resizing */
+  height: 100px; /* Fixed height for the message box */
+  border: 1px solid #ccc; /* Border styling */
+  transition: border-color 0.3s; /* Smooth border color transition */
+}
+
+.message-box:focus {
+  border-color: #007bff; /* Change border color on focus */
+  outline: none; /* Remove outline */
+}
+
+.contact-form button {
+  width: 100%; /* Full width button */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .contact-form {
+    padding: 15px; /* Adjust padding for smaller screens */
+  }
+
+  .message-box {
+    height: 80px; /* Adjust height for mobile devices */
+  }
+}
+
+@media (min-width: 769px) {
+  .contact-form {
+    padding: 30px; /* More padding for larger screens */
+  }
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  width: 100%; /* Ensure full width */
+  transition: border 0.3s, box-shadow 0.3s;
+}
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border: 2px solid #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add shadow effect */
+}
+
+
+
+.services {
+  background-color: #f1f5f9; /* Light background color */
+  padding: 40px 15px; /* Add padding for mobile view */
+}
+
+.service-item {
+  display: flex; /* Use Flexbox */
+  flex-direction: column; /* Stack content vertically */
+  justify-content: space-between; /* Space items evenly */
+  height: 300px; /* Fixed height for uniformity */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover effects */
+  cursor: pointer; /* Pointer cursor on hover */
+  margin-bottom: 20px; /* Space between items */
+}
+
+.service-icon {
+  margin-bottom: 15px; /* Space below the icon */
+  transition: color 0.3s ease; /* Icon color change effect */
+}
+
+.service-item:hover .service-icon {
+  color: #0056b3; /* Change icon color on hover */
+}
+
+.service-item:hover {
+  transform: translateY(-10px); /* Lift effect */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+h3 {
+  font-size: 1.5rem; /* Responsive font size for headings */
+}
+
+p {
+  font-size: 1rem; /* Responsive font size for paragraphs */
+}
+
+/* Ensure cards are full width in mobile view */
+@media (max-width: 768px) {
+  .service-item {
+    width: 100%; /* Full width on small devices */
+    height: 250px; /* Optional: Reduce height on mobile for better fit */
+  }
+}
+@media (max-width: 768px) {
+  .learn-more-btn {
+    margin-bottom: 8px;
+
+  }
+}
+
+
+@keyframes pop-up {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+.pop-up-btn {
+  animation: pop-up 1s infinite; /* Button pops up every second */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Space between text and arrow */
+}
+
+.pop-up-btn:hover {
+  animation: none; /* Stop animation on hover */
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 100%);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  animation: fadeInUp 2s ease-in-out;
+}
+
+/* Text Animations */
+.hero-title {
+  font-size: 3rem;
+  font-weight: bold;
+  animation: fadeInDown 1.2s ease-in-out;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+}
+
+.hero-message {
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+  font-weight: 500;
+  line-height: 1.6;
+  transition: transform 0.3s ease;
+}
+
+.hero-message:hover {
+  transform: translateY(-5px);
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+/* Button with Gradient Effect */
+.btn-gradient {
+  background: linear-gradient(135deg, #1CB5E0 0%, #000851 100%);
+  color: #fff;
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  border-radius: 50px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.btn-gradient:hover {
+  background: linear-gradient(135deg, #00c9ff 0%, #92fe9d 100%);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+
+
+
+

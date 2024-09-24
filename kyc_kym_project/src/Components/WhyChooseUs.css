@@ -1,0 +1,87 @@
+.glass-card {
+    background: rgba(255, 255, 255, 0.15);  /* Slightly more opaque to enhance visibility */
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);  /* Light shadow */
+    backdrop-filter: blur(10px);  /* Frosted glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.2);  /* Border for the glass effect */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.glass-card:hover {
+    transform: translateY(-10px);  /* Hover effect: elevate the card */
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);  /* Add shadow on hover */
+}
+
+.glass-card h3 {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    color: #174dc3;  /* Ensure white text on glass */
+}
+
+.glass-card p {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #090909;  /* Ensure white text */
+}
+
+.icon {
+    margin-bottom: 10px;
+    font-size: 3rem;
+    transition: color 0.3s ease;
+    color: #210ae9;  /* Ensure icons are white */
+}
+
+.glass-card:hover .icon {
+    color: #FFD700;  /* Change icon color on hover */
+}
+
+h2 {
+    color: #ffffff;  /* Make sure the main title is visible */
+}
+
+/* Mobile View Adjustments */
+@media (max-width: 767px) {
+    .glass-card {
+        padding: 15px !important;
+        margin-bottom: 30px !important;
+        font-size: 0.9rem !important;
+    }
+
+    .icon {
+        font-size: 2.5rem !important;
+    }
+
+    .glass-card h3 {
+        font-size: 1.1rem !important;
+    }
+
+    .glass-card p {
+        font-size: 0.85rem !important;
+    }
+
+    .features {
+        margin-top: 30px !important;
+        margin-bottom: 30px !important;
+    }
+}
+
+/* Extra Small Devices (Portrait Phones) */
+@media (max-width: 575px) {
+    .glass-card {
+        padding: 10px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .icon {
+        font-size: 2rem !important;
+    }
+
+    .glass-card h3 {
+        font-size: 1rem !important;
+    }
+
+    .glass-card p {
+        font-size: 0.8rem !important;
+    }
+}

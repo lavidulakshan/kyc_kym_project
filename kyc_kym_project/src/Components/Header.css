@@ -1,0 +1,77 @@
+/* General header styles */
+.header {
+  background-color: #ffffff; /* White background */
+  color: #333; /* Dark text */
+  padding: 10px 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.navbar-brand {
+  font-size: 1.8em;
+  color: #333; /* Darker color for branding */
+  font-weight: 600;
+}
+
+.navbar-brand:hover {
+  color: #f0a500;
+}
+
+/* Navigation links */
+.nav-link {
+  color: #333; /* Darker link text */
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #FFD700; /* Gold color on hover */
+}
+
+.auth-links .btn {
+  border-radius: 20px;
+}
+
+/* Mobile-specific auth links */
+.auth-links-mobile .btn {
+  font-size: 0.9em;
+}
+
+/* Ensure proper navbar visibility on mobile */
+.navbar {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Sticky header effect */
+body {
+  padding-top: 70px;
+}
+
+@media (max-width: 576px) {
+  .btn-signin, .btn-register {
+    margin-bottom: 15px !important; /* More margin on smaller screens */
+  }
+}
+
+/* Link Hover Effect */
+.nav-link:hover {
+  color: #FFD700 !important; /* Gold color on hover */
+  text-decoration: none; /* Remove underline */
+}
+
+/* Hover effects for the Sign In button */
+.btn-signin:hover {
+  background: linear-gradient(135deg, #00F260 0%, #0575E6 100%) !important; /* Change gradient on hover */
+  transform: translateY(-3px); /* Slight lift */
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3); /* Deepen shadow */
+}
+
+/* Hover effects for the Register button */
+.btn-register:hover {
+  background: linear-gradient(135deg, #FF512F 0%, #DD2476 100%) !important; /* Change gradient on hover */
+  transform: translateY(-3px); /* Slight lift */
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.3); /* Deepen shadow */
+}

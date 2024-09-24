@@ -1,0 +1,111 @@
+.user-profile-container {
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative; /* Ensure positioning for background and profile image */
+    background-color: #f8f9fa; /* Light background color */
+}
+
+.back-cover {
+    height: 250px; /* Adjusted for better visual appeal */
+    overflow: hidden;
+    border-radius: 15px 15px 0 0; /* Rounded top edges */
+}
+
+.back-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 15px 15px 0 0; /* Match the container's top rounded edges */
+}
+
+.profile-image-wrapper {
+    position: absolute;
+    bottom: -75px; /* Positioning below the background */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10; /* Above the background */
+}
+
+.profile-image {
+    border: 5px solid #fff; /* White border for the profile image */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2); /* Shadow effect */
+    border-radius: 50%; /* Circular shape */
+}
+
+.input-group {
+    align-items: center; /* Center icons vertically */
+}
+
+.input-group-text {
+    background-color: #f8f9fa; /* Light background for icons */
+    border: 1px solid #ced4da; /* Matching border */
+    border-right: none; /* Remove right border for seamless look */
+}
+
+.form-control {
+    border-radius: 0 0.25rem 0.25rem 0; /* Rounded edges */
+    transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition */
+}
+
+.form-control:focus {
+    border-color: #80bdff; /* Focus border color */
+    box-shadow: 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Focus shadow */
+}
+
+.is-invalid {
+    border-color: #dc3545; /* Error border color */
+}
+
+.invalid-feedback {
+    font-size: 0.875rem; /* Smaller font size for error messages */
+}
+
+.btn {
+    border-radius: 5px; /* Rounded buttons */
+}
+
+.btn:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Button hover effect */
+}
+
+.text-primary {
+    color: #007bff !important; /* Bootstrap primary color */
+}
+
+/* Additional profile picture styles */
+.profile-image-container {
+    position: relative;
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid #fff; /* White border for profile picture container */
+}
+
+.profile-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%; /* Circular profile image */
+}
+
+.user-information {
+    color: black; /* Change text color to black */
+}
+
+h4.text-primary {
+    color: #007bff; /* Keep heading color as primary */
+}
+
+/* Ensure all text elements have sufficient contrast */
+.row p {
+    color: black; /* Ensure paragraph text is black */
+}
+
+/* For input fields, if you want to ensure the placeholder text is also visible */
+.form-control::placeholder {
+    color: rgba(0, 0, 0, 0.5); /* Slightly transparent for better aesthetics */
+}
+

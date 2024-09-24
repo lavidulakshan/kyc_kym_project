@@ -1,0 +1,12 @@
+.map-section {
+    padding: 40px 15px;
+    background-color: #f9f9f9; /* Light background for contrast */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  }
+  
+  .map-container {
+    overflow: hidden; /* Prevent overflow */
+    border-radius: 10px; /* Rounded corners for iframe */
+  }
+  

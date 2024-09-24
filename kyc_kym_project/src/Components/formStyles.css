@@ -1,0 +1,140 @@
+/* .form-container {
+    max-width: 800px;
+    margin: auto;
+    background-color: #f9f9f9;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  }
+  
+  .form-card {
+    border: none;
+    padding: 40px;
+  }
+  
+  .form-title {
+    font-family: 'Poppins', sans-serif;
+    color: #343a40;
+    font-weight: 600;
+  }
+  
+  .form-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6c757d;
+  }
+  
+  .form-control {
+    border-radius: 0.25rem;
+    box-shadow: none !important;
+  }
+  
+  .input-group-text {
+    background-color: #f8f9fa;
+    border: none;
+    border-right: 1px solid #dee2e6;
+  }
+  
+  .btn-custom {
+    background-color: #007bff;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.3s;
+  }
+  
+  .btn-custom:hover {
+    background-color: #0056b3;
+  }
+  
+  .invalid-feedback {
+    font-size: 13px;
+    color: #d9534f;
+    margin-top: 5px;
+  }
+   */
+
+
+   .what-you-receive {
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .what-you-receive h3 {
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+  }
+  
+  .what-you-receive ul {
+    padding-left: 0;
+  }
+  
+  .what-you-receive ul li {
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .what-you-receive ul li:hover {
+    transform: translateX(5px);
+  }
+  
+  .what-you-receive ul li i {
+    transition: color 0.3s ease;
+  }
+  
+  .what-you-receive ul li:hover i {
+    color: #28a745;
+  }
+  
+  .what-you-receive ul li span {
+    font-size: 1.1rem;
+    color: #495057;
+  }
+  
+  .what-you-receive ul li:hover span {
+    color: #007bff;
+  }
+  .background-section {
+    position: relative;
+    width: 100%;
+    height: 400px; /* Adjust height as needed */
+    background-image: url('/path-to-your-image.jpg'); /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
+  
+  .overlay-text {
+    position: absolute;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay for text visibility */
+    padding: 20px;
+    border-radius: 8px;
+  }
+  
+  .overlay-text h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  .overlay-text p {
+    font-size: 1.2rem;
+  }
+  
+  @media (max-width: 768px) {
+    .overlay-text h1 {
+      font-size: 1.8rem;
+    }
+  
+    .overlay-text p {
+      font-size: 1rem;
+    }
+  }
+    

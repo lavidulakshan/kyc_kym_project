@@ -1,0 +1,60 @@
+/* Styling the background section */
+.background-section {
+    position: relative;
+    width: 100%; /* Full width of the page */
+    height: 400px; /* You can adjust this height if needed */
+    background-image: url('https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg');
+    background-size: cover; /* Ensure the image covers the full width */
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+/* Styling the overlay text */
+.overlay-text {
+    position: absolute;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5); /* Dark overlay for better readability */
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 80%; /* Ensure text doesn't stretch too far */
+    color: white;
+}
+
+/* Large text for the main heading */
+.overlay-text h1 {
+    font-size: 2.5rem; /* Adjusted heading size */
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/* Smaller text for the description */
+.overlay-text p {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+/* Responsive design for mobile screens */
+@media (max-width: 768px) {
+    .background-section {
+      height: 300px; /* Adjust the height for smaller screens */
+    }
+
+    .overlay-text h1 {
+      font-size: 1.8rem;
+    }
+
+    .overlay-text p {
+      font-size: 1rem;
+    }
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #f4f7fa;
+    margin: 0;
+    padding: 0;
+}
