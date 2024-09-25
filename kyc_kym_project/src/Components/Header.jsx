@@ -4,6 +4,7 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS
 import './Header.css'; // Custom CSS for hover effects
 import logo from '../images/logo.png';
 import { FaEye, FaEyeSlash, FaShieldAlt } from 'react-icons/fa'; // Import eye and shield icons
+import { Link } from 'react-router-dom';
 
 function Header() {
   const [isNavbarCollapsed, setIsNavbarCollapsed] = useState(true);
@@ -18,6 +19,7 @@ function Header() {
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
   const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State for toggling confirm password visibility
+  const [isMerchant, setIsMerchant] = useState(false); // State for registering as Merchant or User
 
   const toggleNavbar = () => {
     setIsNavbarCollapsed(!isNavbarCollapsed);
@@ -102,6 +104,7 @@ function Header() {
     if (valid) {
       // Proceed with form submission or next steps
       console.log('Form is valid.');
+      console.log(isMerchant ? 'Registering as Merchant' : 'Registering as User');
     }
   };
 
@@ -125,19 +128,24 @@ function Header() {
           <div className={`collapse navbar-collapse ${isNavbarCollapsed ? 'collapse' : 'show'}`} id="navbarNav">
             <ul className="navbar-nav ms-auto text-center">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#" style={linkStyle} onClick={closeNavbar}>
+                <Link to="/" className="nav-link active" aria-current="page" style={linkStyle} onClick={closeNavbar}>
                   Home
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#about" style={linkStyle} onClick={closeNavbar}>
+                <Link to="/#about" className="nav-link" style={linkStyle} onClick={closeNavbar}>
                   About Us
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#service" style={linkStyle} onClick={closeNavbar}>
-                  Services
-                </a>
+                <Link to="/#service" className="nav-link" style={linkStyle} onClick={closeNavbar}>
+                  Service
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/#contactus" className="nav-link" style={linkStyle} onClick={closeNavbar}>
+                  Contact Us
+                </Link>
               </li>
               <li className="nav-item">
                 <a
@@ -184,18 +192,37 @@ function Header() {
                   <FaShieldAlt style={iconStyle} /> Your information is protected
                 </div>
 
-                {/* Conditionally render fields for Sign In and Register */}
                 {!isSignIn && (
-                  <input
-                    type="text"
-                    className="form-control my-3"
-                    placeholder="Name"
-                    value={name}
-                    onChange={handleNameChange}
-                    style={inputStyle}
-                  />
+                  <>
+                    {/* Merchant or User Selection */}
+                    <div className="mb-3">
+                      <label htmlFor="role-select" className="form-label">
+                        Register As:
+                      </label>
+                      <select
+                        id="role-select"
+                        className="form-select"
+                        value={isMerchant ? 'merchant' : 'user'}
+                        onChange={(e) => setIsMerchant(e.target.value === 'merchant')}
+                      >
+                        <option value="user">User</option>
+                        <option value="merchant">Merchant</option>
+                      </select>
+                    </div>
+
+                    {/* Name Field */}
+                    <input
+                      type="text"
+                      className="form-control my-3"
+                      placeholder="Full Name"
+                      value={name}
+                      onChange={handleNameChange}
+                      style={inputStyle}
+                    />
+                  </>
                 )}
 
+                {/* Email Field */}
                 <input
                   type="email"
                   className="form-control my-3"
@@ -234,7 +261,10 @@ function Header() {
                         onChange={handleConfirmPasswordChange}
                         style={inputStyle}
                       />
-                      <span className="input-group-text password-toggle-icon" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                      <span
+                        className="input-group-text password-toggle-icon"
+                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      >
                         {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                       </span>
                     </div>

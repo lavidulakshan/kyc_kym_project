@@ -1,0 +1,26 @@
+.admin-header {
+    background-color: #fff; /* White background */
+    border-bottom: 1px solid #ddd; /* Light bottom border */
+    position: fixed; /* Fixed position at the top */
+    top: 0;
+    width: 100%; /* Full width across the page */
+    z-index: 1000; /* Ensure it stays on top of other elements */
+  }
+  
+  .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ff0000; /* Red badge for notifications */
+    color: #fff;
+    font-size: 12px;
+    border-radius: 50%;
+    padding: 4px 6px;
+  }
+  
+  /* Add some padding to the top of the page to accommodate the fixed header */
+  body {
+    padding-top: 60px; /* Adjust this value based on the height of your header */
+  }
+  
+  

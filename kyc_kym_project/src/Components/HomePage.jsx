@@ -6,6 +6,7 @@ import BarChart from "./ BarChart";
 import './HomePage.css';
 import MapSection from "./ MapSection";
 import ApiPurpose from "./ApiPurpose";
+import { useLocation } from 'react-router-dom';
 
 
 import data from '../images/back.gif'; // Correct image import
@@ -13,6 +14,51 @@ import WhyChooseUs from "./WhyChooseUs";
 
 
 const Homepage = () => {
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash === "#about") {
+      const aboutSection = document.getElementById("about");
+      if (aboutSection) {
+        aboutSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
+
+
+  useEffect(() => {
+    if (location.hash === "#service") {
+      const aboutSection = document.getElementById("service");
+      if (aboutSection) {
+        aboutSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
+
+
+  useEffect(() => {
+    if (location.hash === "#contactus") {
+      const aboutSection = document.getElementById("contactus");
+      if (aboutSection) {
+        aboutSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
+
+
+
+  useEffect(() => {
+    if (location.hash === "#/") {
+      const aboutSection = document.getElementById("service");
+      if (aboutSection) {
+        aboutSection.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
+
+
+
   useEffect(() => {
     AOS.init({ duration: 1000 });
   }, []);
@@ -206,7 +252,7 @@ const Homepage = () => {
 
 
       {/* Contact Us Section */}
-      <section className="contact-us container my-5">
+      <section className="contact-us container my-5" id="contactus">
         <h2 data-aos="fade-up" className="text-center text-primary">Contact Us</h2>
         <div className="contact-info row justify-content-center">
           <div className="contact-item col-md-3" data-aos="fade-up" data-aos-delay="200">

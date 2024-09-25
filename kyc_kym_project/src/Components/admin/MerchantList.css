@@ -1,0 +1,143 @@
+.merchant-list {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Search bar layout */
+  .search-bar .form-control {
+    border-radius: 25px;
+    padding-left: 15px;
+  }
+  
+  .search-bar button {
+    padding: 8px 20px;
+    border-radius: 25px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+  }
+  
+  .search-bar button:hover {
+    background-color: #0056b3;
+  }
+  
+  .merchant-row-header {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  .merchant-row {
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    align-items: center;
+  }
+  
+  .merchant-row div {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+  
+  .merchant-row .btn-danger {
+    background-color: #dc3545;
+    color: white;
+  }
+  
+  .merchant-row .btn-success {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  /* See More Button */
+  .see-more-btn {
+    background-color: #17a2b8;
+    color: white;
+    transition: background-color 0.3s ease;
+    padding: 5px 10px; /* Reduced size */
+    font-size: 12px; /* Smaller font size */
+  }
+  
+  .see-more-btn:hover {
+    background-color: #138496;
+  }
+  
+  /* Status Text */
+  .status-text {
+    font-size: 14px;
+    color: #212529;
+  }
+  
+  /* Pagination styling */
+  .pagination-nav .pagination {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .pagination-nav .page-item .page-link {
+    color: #007bff;
+    border: none;
+    margin: 0 5px;
+    border-radius: 25px;
+    padding: 8px 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pagination-nav .page-item.active .page-link {
+    background-color: #007bff;
+    color: white;
+    border: none;
+  }
+  
+  .pagination-nav .page-item .page-link:hover {
+    background-color: #0056b3;
+    color: white;
+  }
+  
+  .pagination-nav .page-item.disabled .page-link {
+    background-color: #e9ecef;
+    color: #6c757d;
+  }
+  
+  /* Dropdown styling */
+  .dropdown .form-control {
+    position: relative;
+    padding-right: 30px;
+  }
+  
+  .dropdown .form-control::after {
+    content: '\25BC';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .merchant-row-header {
+      display: none; /* Hide header row on mobile */
+    }
+  
+    .merchant-row div {
+      font-size: 14px;
+      padding: 5px 0;
+    }
+  
+    .merchant-row .btn-sm {
+      font-size: 12px;
+      padding: 5px 10px;
+    }
+  
+    .merchant-row .see-more-btn {
+      width: auto;
+      margin-top: 5px; /* Space between buttons */
+    }
+  }
+  

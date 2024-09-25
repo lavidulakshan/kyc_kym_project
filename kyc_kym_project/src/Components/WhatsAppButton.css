@@ -1,0 +1,188 @@
+/* Container for the entire WhatsApp chat button */
+.whatsapp-chat-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+/* Floating "Message Us" button */
+@keyframes popup {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    25% {
+        transform: scale(1.05);
+        opacity: 1; /* No change in opacity for a smoother effect */
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.9; /* Slightly faded */
+    }
+    75% {
+        transform: scale(1.05);
+        opacity: 1; /* Back to full opacity */
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.whatsapp-button {
+    display: flex;
+    align-items: center;
+    background-color: #25D366;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    animation: popup 1.2s ease infinite; /* Increased duration for smoothness */
+}
+
+/* Optional: Add hover effect */
+.whatsapp-button:hover {
+    background-color: #1DA851; /* Darker shade on hover */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+}
+
+.whatsapp-icon {
+    font-size: 26px;
+    margin-right: 12px;
+}
+
+.whatsapp-button span {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+/* Chat window */
+.whatsapp-chat-window {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    background: #fff;
+    width: 320px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    animation: fadeInUp 0.4s ease-in-out;
+    z-index: 1001;
+}
+
+/* Chat header with logo, title, and close button */
+.chat-header {
+    display: flex;
+    align-items: center;
+    background-color: #075E54;
+    color: white;
+    padding: 10px;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+}
+
+.company-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%; /* Rounded logo */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.company-logo:hover {
+    transform: scale(1.1); /* Slightly scale up on hover */
+    box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.4); /* Deepen shadow on hover */
+}
+
+.chat-title h5 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.chat-title span {
+    font-size: 12px;
+    color: #d4d4d4;
+}
+
+/* Custom Close Chat Button */
+.close-chat {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: white;
+    color: #075E54;
+    font-size: 16px;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.close-chat:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.1); /* Slightly larger on hover */
+    box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.3); /* Slight shadow on hover */
+}
+
+/* Chat body with message and "Start Chat" button */
+.chat-body {
+    padding: 15px;
+}
+
+.chat-message {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.start-chat-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #25D366;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    border: none;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+}
+
+.start-chat-button:hover {
+    background-color: #22c65b;
+    box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.3); /* Deepen shadow on hover */
+}
+
+.start-chat-button svg {
+    margin-right: 8px;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -36,7 +36,7 @@ const ApiPurpose = () => {
     <>
       <section className="feature-section py-5">
         <div className="container">
-          <h2 className="text-center mb-5" data-aos="fade-up">Purpose of Our Site</h2>
+          <h2 className="text-center mb-5 text-primary" data-aos="fade-up">Purpose of Our Site</h2>
 
           {/* Purpose 1 */}
           <div className="row purpose-row align-items-center mb-5" data-aos="fade-right" data-aos-delay="200">

@@ -2,6 +2,7 @@ import React from "react";
 import { FaRocket, FaShieldAlt, FaLock, FaIndustry } from "react-icons/fa";
 import './WhyChooseUs.css';
 
+
 const WhyChooseUs = () => {
   return (
     <section className="container my-5">
