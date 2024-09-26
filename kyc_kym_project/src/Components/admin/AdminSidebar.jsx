@@ -5,6 +5,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./AdminSidebar.css"; // Custom CSS
 import MerchantList from './merchants'; // Importing the merchant list component
+import CustomerList from "./CustomerList";
+import AdminList from "./ AdminList";
 
 const AdminSidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -77,6 +79,8 @@ const AdminSidebar = () => {
 
         {/* Rendering the merchant list based on the selected sidebar item */}
         {activeComponent === 'merchants' && <MerchantList />}
+        {activeComponent === 'customers' && <CustomerList />}
+        {activeComponent === 'admin' && <AdminList/>}
         {/* Other components like Customers, Admin, etc. can be rendered similarly */}
       </div>
     </div>

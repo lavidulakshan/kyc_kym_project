@@ -6,7 +6,6 @@ import jsPDF from 'jspdf';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import './UserProfile.css';
-import SectionWithBackground from './SectionWithBackground';
 
 // Validation schema using Yup
 const validationSchema = Yup.object({
@@ -37,7 +36,7 @@ const validationSchema = Yup.object({
 
 const UserProfile = () => {
     const [isEditing, setIsEditing] = useState(false);
-    const [profileImage, setProfileImage] = useState(null); // For profile image upload
+    const [profileImage, setProfileImage] = useState(null);
     const [showDocumentUpload, setShowDocumentUpload] = useState(false);
 
     const initialValues = {
@@ -106,30 +105,30 @@ const UserProfile = () => {
             <div className="position-relative">
                 {/* Back Cover Image */}
                 <div className="back-cover">
-                <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJpbGxlZHRpbWV8ZW58MHx8fHwxNjYyOTQ4Nzg5&ixlib=rb-1.2.1&q=80&w=1080" alt="Background Cover" className="img-fluid rounded-top" />
+                    <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDF8fGJpbGxlZHRpbWV8ZW58MHx8fHwxNjYyOTQ4Nzg5&ixlib=rb-1.2.1&q=80&w=1080" alt="Background Cover" className="img-fluid rounded-top" />
                 </div>
 
                 {/* Profile Image Section */}
                 <div className="profile-image-wrapper position-absolute top-50 start-50 translate-middle">
-    <img
-        src={profileImage || 'https://via.placeholder.com/140'}
-        alt="Profile"
-        className="profile-image rounded-circle border border-light"
-        width="140"
-        height="140"
-    />
-    <div className="mt-2">
-        <label htmlFor="profileImage" className="btn btn-outline-light">
-            Update Profile Picture
-        </label>
-        <input
-            type="file"
-            id="profileImage"
-            className="d-none"
-            onChange={handleProfileImageChange}
-        />
-    </div>
-</div>
+                    <img
+                        src={profileImage || 'https://via.placeholder.com/140'}
+                        alt="Profile"
+                        className="profile-image rounded-circle border border-light"
+                        width="140"
+                        height="140"
+                    />
+                    <div className="mt-2">
+                        <label htmlFor="profileImage" className="btn btn-outline-light">
+                            Update Profile Picture
+                        </label>
+                        <input
+                            type="file"
+                            id="profileImage"
+                            className="d-none"
+                            onChange={handleProfileImageChange}
+                        />
+                    </div>
+                </div>
             </div>
 
             <h2 className="mb-4 text-center">User Profile</h2>

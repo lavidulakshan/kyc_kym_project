@@ -9,6 +9,7 @@ import AdminPage from './pages/AdminPage';
 import Header from './Components/Header';
 import Footer from './Components/Footer';
 import WhatsAppButton from './Components/WhatsAppButton ';
+import KymRegistration from './Components/KymRegistration';
 
 function AppContent() {
   const location = useLocation(); // Get current location
@@ -17,17 +18,21 @@ function AppContent() {
     <div>
       {/* Conditionally render the Header */}
       {location.pathname !== '/adminprofile' && <Header />} 
+
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="kyc" element={<KYCRegistration />} />
         <Route path="userprofile" element={<UserProfile />} />
         <Route path="adminprofile" element={<AdminPage />} />
         <Route path="/kycregistration" element={<KYCRegistration />} />
+        <Route path="/kymregistration" element={<KymRegistration />} />
       </Routes>
 
       <WhatsAppButton />
         {/* Conditionally render the Footer */}
+
       {location.pathname !== '/adminprofile' && <Footer />} 
+      
     </div>
   );
 }

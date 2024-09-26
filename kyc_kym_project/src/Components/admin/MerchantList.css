@@ -24,8 +24,8 @@
   }
   
   .merchant-row-header {
-    background-color: #007bff;
-    color: white;
+    /* background-color: #007bff; */
+    color: rgb(5, 4, 4);
     padding: 10px;
     border-radius: 8px;
     font-size: 16px;

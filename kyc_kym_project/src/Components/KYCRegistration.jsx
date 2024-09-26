@@ -518,7 +518,7 @@ const KYMRegistration = () => {
             )}
 
             {/* Tabs */}
-            <ul className="nav nav-tabs mb-4" id="myTab" role="tablist">
+            {/* <ul className="nav nav-tabs mb-4" id="myTab" role="tablist">
                 <li className="nav-item" role="presentation">
                     <button
                         className={`nav-link ${activeTab === 'newUser' ? 'active' : ''}`}
@@ -535,7 +535,7 @@ const KYMRegistration = () => {
                         Already Subscribed?
                     </button>
                 </li>
-            </ul>
+            </ul> */}
 
             <div className="row">
                 <div className="col-md-6">

@@ -1,0 +1,55 @@
+.form-section {
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    background-color: #f8f9fa;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.8s ease-in-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 576px) {
+    .form-section {
+        padding: 15px;
+    }
+}
+
+/* Add hover effects to buttons */
+.btn-primary {
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Input fields styling */
+.form-control {
+    border-radius: 5px;
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+/* Add icons to inputs for improved UX */
+input[type="text"], input[type="email"], input[type="file"], select {
+    padding-left: 40px; /* Add space for icon */
+    position: relative;
+}
+
+input[type="text"]::placeholder, input[type="email"]::placeholder {
+    font-style: italic;
+    color: #aaa;
+}

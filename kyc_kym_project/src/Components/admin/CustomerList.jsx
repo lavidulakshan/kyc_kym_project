@@ -4,88 +4,88 @@ import { FaSearch, FaArrowLeft, FaArrowRight, FaAngleDoubleLeft, FaAngleDoubleRi
 import { Tab, Tabs } from 'react-bootstrap'; // Import Bootstrap Tabs
 import moment from 'moment'; // Import moment for time formatting
 
-const initialMerchants = [
+const initialCustomers = [
   {
-    id: "MER001",
-    name: "John's Electronics",
-    email: "john@electronics.com",
+    id: "CUST001",
+    name: "John Doe",
+    email: "john@doe.com",
     phone: "+1-234-567-890",
     date: new Date(), // Registered just now
-    status: 'Pending', // Merchant status
+    status: 'Pending', // Customer status
   },
   {
-    id: "MER002",
-    name: "BestBuy Groceries",
-    email: "info@bestbuy.com",
+    id: "CUST002",
+    name: "Jane Smith",
+    email: "jane@smith.com",
     phone: "+1-123-456-7890",
     date: new Date(new Date().getTime() - 60 * 60 * 1000), // Registered 1 hour ago
     status: 'Pending',
   },
   {
-    id: "MER003",
-    name: "Elegant Fashion",
-    email: "contact@elegantfashion.com",
+    id: "CUST003",
+    name: "Sarah Lee",
+    email: "sarah@lee.com",
     phone: "+1-321-654-0987",
     date: new Date(new Date().getTime() - 24 * 60 * 60 * 1000), // Registered 1 day ago
     status: 'Active',
   },
-  // Add more merchants here to simulate a large dataset
+  // Add more customers here to simulate a large dataset
 ];
 
-const MerchantList = () => {
+const CustomerList = () => {
   const [searchEmail, setSearchEmail] = useState(''); // Search by email state
-  const [searchId, setSearchId] = useState(''); // Search by merchant ID state
+  const [searchId, setSearchId] = useState(''); // Search by customer ID state
   const [startDate, setStartDate] = useState(''); // From date
   const [endDate, setEndDate] = useState(''); // To date
   const [searchStatus, setSearchStatus] = useState(''); // Search by status state
-  const [merchants, setMerchants] = useState(initialMerchants); // Merchants state
+  const [customers, setCustomers] = useState(initialCustomers); // Customers state
 
   // New state for the selected tab
   const [selectedTab, setSelectedTab] = useState('all'); // 'all' or 'new'
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const merchantsPerPage = 3; // Change this value to display more or fewer merchants per page
+  const customersPerPage = 5; // Change this value to display more or fewer customers per page
 
-  // Function to block/unblock a merchant and update the status column
-  const toggleMerchantStatus = (id, status) => {
-    const updatedMerchants = merchants.map((merchant) =>
-      merchant.id === id
-        ? { ...merchant, status: status }
-        : merchant
+  // Function to accept/reject a customer and update the status column
+  const toggleCustomerStatus = (id, status) => {
+    const updatedCustomers = customers.map((customer) =>
+      customer.id === id
+        ? { ...customer, status: status }
+        : customer
     );
-    setMerchants(updatedMerchants);
+    setCustomers(updatedCustomers);
   };
 
-  // Calculate how long ago a merchant registered (e.g., 30 minutes ago)
+  // Calculate how long ago a customer registered (e.g., 30 minutes ago)
   const getTimeAgo = (date) => {
     return moment(date).fromNow(); // e.g., "30 minutes ago"
   };
 
-  // Filter merchants based on search criteria
-  const filteredMerchants = merchants.filter((merchant) => {
-    const matchesEmail = searchEmail === '' || merchant.email.toLowerCase().includes(searchEmail.toLowerCase());
-    const matchesId = searchId === '' || merchant.id.toLowerCase().includes(searchId.toLowerCase());
-    const matchesDate = (!startDate || new Date(merchant.date) >= new Date(startDate)) && (!endDate || new Date(merchant.date) <= new Date(endDate));
-    const matchesStatus = searchStatus === '' || merchant.status.toLowerCase() === searchStatus.toLowerCase();
+  // Filter customers based on search criteria
+  const filteredCustomers = customers.filter((customer) => {
+    const matchesEmail = searchEmail === '' || customer.email.toLowerCase().includes(searchEmail.toLowerCase());
+    const matchesId = searchId === '' || customer.id.toLowerCase().includes(searchId.toLowerCase());
+    const matchesDate = (!startDate || new Date(customer.date) >= new Date(startDate)) && (!endDate || new Date(customer.date) <= new Date(endDate));
+    const matchesStatus = searchStatus === '' || customer.status.toLowerCase() === searchStatus.toLowerCase();
 
     return matchesEmail && matchesId && matchesDate && matchesStatus;
   });
 
-  // Filter merchants based on selected tab (show only merchants with 'Pending' status for new merchants)
-  const displayedMerchants = filteredMerchants.filter((merchant) => {
+  // Filter customers based on selected tab (show only customers with 'Pending' status for new customers)
+  const displayedCustomers = filteredCustomers.filter((customer) => {
     if (selectedTab === 'new') {
-      // Show only pending merchants for the new tab
-      return merchant.status === 'Pending';
+      // Show only pending customers for the new tab
+      return customer.status === 'Pending';
     }
-    return true; // Show all merchants for 'all' tab
+    return true; // Show all customers for 'all' tab
   });
 
   // Pagination logic
-  const indexOfLastMerchant = currentPage * merchantsPerPage;
-  const indexOfFirstMerchant = indexOfLastMerchant - merchantsPerPage;
-  const currentMerchants = displayedMerchants.slice(indexOfFirstMerchant, indexOfLastMerchant);
-  const totalPages = Math.ceil(displayedMerchants.length / merchantsPerPage);
+  const indexOfLastCustomer = currentPage * customersPerPage;
+  const indexOfFirstCustomer = indexOfLastCustomer - customersPerPage;
+  const currentCustomers = displayedCustomers.slice(indexOfFirstCustomer, indexOfLastCustomer);
+  const totalPages = Math.ceil(displayedCustomers.length / customersPerPage);
 
   // Change page function
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -97,21 +97,21 @@ const MerchantList = () => {
   const goToPreviousPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
 
   return (
-    <div className="merchant-list container">
-      <h3 className="text-center mb-4">Merchants</h3>
+    <div className="customer-list container">
+      <h3 className="text-center mb-4">Customers</h3>
 
-      {/* Bootstrap Tabs for 'New' and 'All' merchants */}
+      {/* Bootstrap Tabs for 'New' and 'All' customers */}
       <Tabs
-        id="merchant-tabs"
+        id="customer-tabs"
         activeKey={selectedTab}
         onSelect={(tab) => setSelectedTab(tab)}
         className="mb-4"
       >
-        <Tab eventKey="all" title="All Merchants">
-          <div>All Merchants</div>
+        <Tab eventKey="all" title="All Customers">
+          <div>All Customers</div>
         </Tab>
-        <Tab eventKey="new" title="New Merchants">
-          <div>New Merchants</div>
+        <Tab eventKey="new" title="New Customers">
+          <div>New Customers</div>
         </Tab>
       </Tabs>
 
@@ -126,7 +126,7 @@ const MerchantList = () => {
             onChange={(e) => setSearchEmail(e.target.value)}
           />
         </div>
-        <div className="col-md-3 mb-3">
+        <div className="col-md-2 mb-3">
           <input
             type="text"
             className="form-control"
@@ -135,7 +135,8 @@ const MerchantList = () => {
             onChange={(e) => setSearchId(e.target.value)}
           />
         </div>
-        <div className="col-md-3 mb-3">
+       From
+        <div className="col-md-2 mb-3">
           <input
             type="date"
             className="form-control"
@@ -144,7 +145,9 @@ const MerchantList = () => {
             onChange={(e) => setStartDate(e.target.value)}
           />
         </div>
-        <div className="col-md-3 mb-3">
+     To
+        <div className="col-md-2 mb-3">
+    
           <input
             type="date"
             className="form-control"
@@ -155,7 +158,7 @@ const MerchantList = () => {
         </div>
 
         {/* Search by Status Dropdown with arrow */}
-        <div className="col-md-3 mb-3">
+        <div className="col-md-2 mb-3">
           <div className="dropdown">
             <select
               className="form-control custom-select"
@@ -178,66 +181,66 @@ const MerchantList = () => {
       </div>
 
       {/* Header row */}
-      <div className="row merchant-row-header d-none d-md-flex">
-        <div className="col-md-1"><strong>Merchant ID</strong></div>
-        <div className="col-md-2"><strong>Merchant Name</strong></div>
-        <div className="col-md-2"><strong>Business Email</strong></div>
+      <div className="row customer-row-header d-none d-md-flex merchant-row-header">
+        <div className="col-md-1"><strong>Customer ID</strong></div>
+        <div className="col-md-2"><strong>Customer Name</strong></div>
+        <div className="col-md-2"><strong>Email</strong></div>
         <div className="col-md-2"><strong>Phone Number</strong></div>
         <div className="col-md-2"><strong>Date Registered</strong></div>
         <div className="col-md-1"><strong>Status</strong></div>
         <div className="col-md-2"><strong>Action</strong></div>
       </div>
 
-      {/* Merchant rows */}
-      {currentMerchants.length > 0 ? (
-        currentMerchants.map((merchant, index) => (
-          <div className="row merchant-row mb-3" key={index}>
+      {/* Customer rows */}
+      {currentCustomers.length > 0 ? (
+        currentCustomers.map((customer, index) => (
+          <div className="row customer-row mb-3" key={index}>
             <div className="col-12 col-md-1">
-              <strong className="d-md-none">Merchant ID: </strong>
-              {merchant.id}
+              <strong className="d-md-none">Customer ID: </strong>
+              {customer.id}
             </div>
             <div className="col-12 col-md-2">
-              <strong className="d-md-none">Merchant Name: </strong>
-              {merchant.name}
+              <strong className="d-md-none">Customer Name: </strong>
+              {customer.name}
             </div>
             <div className="col-12 col-md-2">
               <strong className="d-md-none">Email: </strong>
-              {merchant.email}
+              {customer.email}
             </div>
             <div className="col-12 col-md-2">
               <strong className="d-md-none">Phone: </strong>
-              {merchant.phone}
+              {customer.phone}
             </div>
             <div className="col-12 col-md-2">
               <strong className="d-md-none">Date: </strong>
-              {getTimeAgo(merchant.date)}
+              {getTimeAgo(customer.date)}
             </div>
             <div className="col-12 col-md-1">
               {/* Status Column */}
-              <strong className="status-text">{merchant.status}</strong>
+              <strong className="status-text">{customer.status}</strong>
             </div>
             <div className="col-12 col-md-2 text-md-right d-flex justify-content-between">
               {selectedTab === 'new' ? (
                 <>
                   <button
                     className="btn btn-success btn-sm"
-                    onClick={() => toggleMerchantStatus(merchant.id, 'Active')}
+                    onClick={() => toggleCustomerStatus(customer.id, 'Active')}
                   >
                     Accept
                   </button>
                   <button
                     className="btn btn-danger btn-sm ml-2"
-                    onClick={() => toggleMerchantStatus(merchant.id, 'Blocked')}
+                    onClick={() => toggleCustomerStatus(customer.id, 'Blocked')}
                   >
                     Reject
                   </button>
                 </>
               ) : (
                 <button
-                  className={`btn ${merchant.status === 'Active' ? 'btn-danger' : 'btn-success'} btn-sm`}
-                  onClick={() => toggleMerchantStatus(merchant.id, merchant.status === 'Active' ? 'Blocked' : 'Active')}
+                  className={`btn ${customer.status === 'Active' ? 'btn-danger' : 'btn-success'} btn-sm`}
+                  onClick={() => toggleCustomerStatus(customer.id, customer.status === 'Active' ? 'Blocked' : 'Active')}
                 >
-                  {merchant.status === 'Active' ? 'Block' : 'Unblock'}
+                  {customer.status === 'Active' ? 'Block' : 'Unblock'}
                 </button>
               )}
 
@@ -246,11 +249,11 @@ const MerchantList = () => {
           </div>
         ))
       ) : (
-        <p className="text-center">No merchants found</p>
+        <p className="text-center">No customers found</p>
       )}
 
       {/* Pagination */}
-      {displayedMerchants.length > merchantsPerPage && (
+      {displayedCustomers.length > customersPerPage && (
         <nav className="pagination-nav mt-4">
           <ul className="pagination justify-content-center">
             <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
@@ -293,4 +296,4 @@ const MerchantList = () => {
   );
 };
 
-export default MerchantList;
+export default CustomerList;

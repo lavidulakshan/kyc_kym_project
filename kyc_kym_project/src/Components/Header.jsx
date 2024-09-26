@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS
 import './Header.css'; // Custom CSS for hover effects
 import logo from '../images/logo.png';
-import { FaEye, FaEyeSlash, FaShieldAlt } from 'react-icons/fa'; // Import eye and shield icons
-import { Link } from 'react-router-dom';
+import { FaEye, FaEyeSlash, FaShieldAlt, FaUser, FaSignOutAlt } from 'react-icons/fa'; // Import icons
+import { Link, useLocation } from 'react-router-dom';
 
 function Header() {
+  const location = useLocation(); // Get the current location
   const [isNavbarCollapsed, setIsNavbarCollapsed] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [isSignIn, setIsSignIn] = useState(false); // Track if Sign In is clicked
@@ -20,6 +21,17 @@ function Header() {
   const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
   const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State for toggling confirm password visibility
   const [isMerchant, setIsMerchant] = useState(false); // State for registering as Merchant or User
+  const [user, setUser] = useState(null); // State for user data (image and name)
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false); // State to show/hide profile dropdown
+
+  // Simulate fetching user data when the component mounts
+  useEffect(() => {
+    // Replace this logic with real user data fetching (e.g., from local storage, context, or API)
+    // Assuming user is not logged in by default
+    const loggedUser = { name: 'Lavidu Lakshan', imageUrl: 'https://via.placeholder.com/40' }; // Example for logged-in user
+     // Simulate logged out user
+    setUser(loggedUser); // Set the user data when available (null if not logged in)
+  }, []);
 
   const toggleNavbar = () => {
     setIsNavbarCollapsed(!isNavbarCollapsed);
@@ -39,6 +51,16 @@ function Header() {
     setEmailError(''); // Reset errors when modal is closed
     setPasswordError('');
     setConfirmPasswordError('');
+  };
+
+  const toggleProfileDropdown = () => {
+    setShowProfileDropdown(!showProfileDropdown); // Toggle dropdown visibility
+  };
+
+  const handleLogout = () => {
+    // Logic to log out the user (e.g., clearing auth tokens, etc.)
+    console.log('User logged out');
+    setUser(null); // Set user to null after logout
   };
 
   const handleEmailChange = (e) => {
@@ -108,6 +130,9 @@ function Header() {
     }
   };
 
+  // Check if current route is '/userprofile' and hide the buttons
+  const hideButtons = location.pathname === '/userprofile';
+
   return (
     <div>
       <nav className="navbar navbar-expand-lg fixed-top" style={navbarStyle}>
@@ -147,32 +172,68 @@ function Header() {
                   Contact Us
                 </Link>
               </li>
-              <li className="nav-item">
-                <a
-                  className="nav-link btn btn-signin mx-2"
-                  href="#"
-                  style={buttonSignInStyle}
-                  onClick={() => {
-                    handleShowModal(true); // Open modal in Sign In mode
-                    closeNavbar();
-                  }}
-                >
-                  Sign In
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="nav-link btn btn-register"
-                  href="#"
-                  style={buttonRegisterStyle}
-                  onClick={() => {
-                    handleShowModal(false); // Open modal in Register mode
-                    closeNavbar();
-                  }}
-                >
-                  Register
-                </a>
-              </li>
+              {!user ? (
+                // Show Sign In and Register buttons if no user is logged in
+                !hideButtons && (
+                  <>
+                    <li className="nav-item">
+                      <a
+                        className="nav-link btn btn-signin mx-2"
+                        href="#"
+                        style={buttonSignInStyle}
+                        onClick={() => {
+                          handleShowModal(true); // Open modal in Sign In mode
+                          closeNavbar();
+                        }}
+                      >
+                        Sign In
+                      </a>
+                    </li>
+                    <li className="nav-item">
+                      <a
+                        className="nav-link btn btn-register"
+                        href="#"
+                        style={buttonRegisterStyle}
+                        onClick={() => {
+                          handleShowModal(false); // Open modal in Register mode
+                          closeNavbar();
+                        }}
+                      >
+                        Register
+                      </a>
+                    </li>
+                  </>
+                )
+              ) : (
+                // Show user's image and name if a user is logged in
+                <li className="nav-item dropdown d-flex align-items-center position-relative">
+                  <img
+                    src={user.imageUrl}
+                    alt="User"
+                    style={{ borderRadius: '50%', width: '40px', height: '40px', cursor: 'pointer' }}
+                    onClick={toggleProfileDropdown} // Toggle dropdown on click
+                  />
+                  <span style={{ color: '#333', fontWeight: 'bold', marginLeft: '10px', cursor: 'pointer' }} onClick={toggleProfileDropdown}>
+                    {user.name}
+                  </span>
+
+                  {/* Dropdown Menu */}
+                  {showProfileDropdown && (
+                    <ul className="dropdown-menu show" style={dropdownMenuStyle}>
+                      <li>
+                        <a className="dropdown-item" href="#">
+                          <FaUser style={iconDropdownStyle} /> Your Profile
+                        </a>
+                      </li>
+                      <li>
+                        <a className="dropdown-item" href="#" onClick={handleLogout}>
+                          <FaSignOutAlt style={iconDropdownStyle} /> Logout
+                        </a>
+                      </li>
+                    </ul>
+                  )}
+                </li>
+              )}
             </ul>
           </div>
         </div>
@@ -243,7 +304,10 @@ function Header() {
                     onChange={handlePasswordChange}
                     style={inputStyle}
                   />
-                  <span className="input-group-text password-toggle-icon" onClick={() => setShowPassword(!showPassword)}>
+                  <span
+                    className="input-group-text password-toggle-icon"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
                     {showPassword ? <FaEyeSlash /> : <FaEye />}
                   </span>
                 </div>
@@ -405,11 +469,20 @@ const forgotPasswordStyle = {
   fontSize: '14px',
 };
 
-// Additional CSS for the eye icon inside the password field
-const passwordToggleIconStyle = {
-  cursor: 'pointer',
-  backgroundColor: 'transparent',
-  border: 'none',
+// Custom styles for the profile dropdown
+const dropdownMenuStyle = {
+  position: 'absolute',
+  top: '50px',
+  right: '0px',
+  backgroundColor: '#fff',
+  borderRadius: '5px',
+  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+  zIndex: 1000,
+  minWidth: '160px',
+};
+
+const iconDropdownStyle = {
+  marginRight: '10px',
 };
 
 export default Header;

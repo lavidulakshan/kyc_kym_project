@@ -1,0 +1,118 @@
+/* AdminList.css */
+
+.admin-list {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .admin-list h3 {
+    color: #007bff;
+    font-weight: bold;
+    margin-bottom: 30px;
+  }
+  
+  .create-admin-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .create-admin-form .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .create-admin-form .profile-upload {
+    margin-top: 20px;
+  }
+  
+  .upload-area {
+    position: relative;
+    border: 2px dashed #007bff;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .upload-placeholder {
+    color: #6c757d;
+  }
+  
+  .upload-placeholder p {
+    margin-top: 10px;
+  }
+  
+  .upload-area .file-input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  .profile-preview-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .profile-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #007bff;
+  }
+  
+  .remove-photo-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 2px 6px;
+    font-size: 12px;
+    display: inline-block;
+    background: #dc3545;
+    border: none;
+    color: white;
+  }
+  
+  .all-admins-list {
+    margin-top: 20px;
+  }
+  
+  .admin-item {
+    border: 1px solid #e9ecef;
+    border-radius: 10px;
+  }
+  
+  .admin-item .admin-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .admin-item p {
+    margin-bottom: 5px;
+  }
+  
+  .admin-item .btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+  }
+  
+  .admin-item .btn-danger:hover {
+    background-color: #c82333;
+    color: white;
+  }
+  .deletebtn{
+    height:50px;
+    width: 100px;
+
+  }
+  
