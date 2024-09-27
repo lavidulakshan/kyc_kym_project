@@ -6,6 +6,7 @@ import './formStyles.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import SectionWithBackground from './SectionWithBackground'; // Import the background section component
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 // Validation schema using Yup
 const validationSchema = Yup.object({
@@ -74,9 +75,57 @@ const KYMRegistration = () => {
         },
         validationSchema: validationSchema,
         onSubmit: async (values) => {
-            alert('Form submitted successfully!');
-            console.log(values);
+            try {
+                // Create a FormData object to handle the file uploads
+                const formData = new FormData();
+                
+                // Append form values to the FormData object
+                formData.append("firstName", values.firstName);
+                formData.append("lastName", values.lastName);
+                formData.append("dateOfBirth", values.dateOfBirth);
+                formData.append("nationality", values.nationality);
+                formData.append("gender", values.gender);
+                formData.append("bloodGroup", values.bloodGroup);
+                formData.append("phoneNumber", values.phoneNumber);
+                formData.append("email", values.email);
+                formData.append("idType", values.idType);
+                formData.append("idNumber", values.idNumber);
+                formData.append("occupation", values.occupation);
+                formData.append("sourceOfIncome", values.sourceOfIncome);
+                formData.append("purposeOfAccount", values.purposeOfAccount);
+        
+                // Append files (if they exist)
+                if (values.idDocumentFront) {
+                    formData.append("idDocumentFront", values.idDocumentFront);
+                }
+                if (values.idDocumentBack) {
+                    formData.append("idDocumentBack", values.idDocumentBack);
+                }
+                if (values.proofOfAddress) {
+                    formData.append("proofOfAddress", values.proofOfAddress);
+                }
+        
+                // Send form data via Axios
+                const response = await axios.post("http://localhost:5000/users", formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data', // Important for file uploads
+                    },
+                });
+        
+                if (response.status === 201) { // Expecting a 201 for created resources
+                    console.log(response.data);
+                    alert("Form submitted successfully!");
+                } else {
+                    console.error("Error submitting form", response.statusText);
+                    alert("Failed to submit the form.");
+                }
+            } catch (error) {
+                console.error("Error submitting form:", error);
+                alert("An error occurred while submitting the form.");
+            }
         },
+        
+        
     });
 
     const handleIdTypeChange = (e) => {

@@ -1,4 +1,6 @@
 /* General header styles */
+
+/* // const loggedUser = { name: 'John Doe', imageUrl: 'https://via.placeholder.com/40' };  */
 .header {
   background-color: #ffffff; /* White background */
   color: #333; /* Dark text */

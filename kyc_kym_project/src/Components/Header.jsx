@@ -1,36 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS
-import './Header.css'; // Custom CSS for hover effects
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import './Header.css';
 import logo from '../images/logo.png';
-import { FaEye, FaEyeSlash, FaShieldAlt, FaUser, FaSignOutAlt } from 'react-icons/fa'; // Import icons
+import { FaEye, FaEyeSlash, FaShieldAlt, FaUser, FaSignOutAlt } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import Toaster from './Toaster ';
 
 function Header() {
-  const location = useLocation(); // Get the current location
+  const location = useLocation();
   const [isNavbarCollapsed, setIsNavbarCollapsed] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [isSignIn, setIsSignIn] = useState(false); // Track if Sign In is clicked
-  const [name, setName] = useState(''); // Name for registration
+  const [isSignIn, setIsSignIn] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState(''); // Confirm Password for registration
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
-  const [showPassword, setShowPassword] = useState(false); // State for toggling password visibility
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false); // State for toggling confirm password visibility
-  const [isMerchant, setIsMerchant] = useState(false); // State for registering as Merchant or User
-  const [user, setUser] = useState(null); // State for user data (image and name)
-  const [showProfileDropdown, setShowProfileDropdown] = useState(false); // State to show/hide profile dropdown
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isMerchant, setIsMerchant] = useState(false);
+  const [user, setUser] = useState(null); // User state for logged-in user
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const [toastMessage, setToastMessage] = useState({ message: '', type: '' });
 
-  // Simulate fetching user data when the component mounts
+  const showToast = (message, type) => {
+    setToastMessage({ message, type });
+
+    // Set timeout to clear the toast after 3 seconds
+    setTimeout(() => {
+      setToastMessage({ message: '', type: '' });
+    }, 5000); // Change 3000 to the time (in ms) you want the toaster to last
+  };
+
   useEffect(() => {
-    // Replace this logic with real user data fetching (e.g., from local storage, context, or API)
-    // Assuming user is not logged in by default
-    const loggedUser = { name: 'Lavidu Lakshan', imageUrl: 'https://via.placeholder.com/40' }; // Example for logged-in user
-     // Simulate logged out user
-    setUser(loggedUser); // Set the user data when available (null if not logged in)
+    // Simulate fetching logged-in user from local storage/session or API
+    const loggedUser = JSON.parse(localStorage.getItem('user')) || null;
+    setUser(loggedUser);
   }, []);
 
   const toggleNavbar = () => {
@@ -38,29 +46,34 @@ function Header() {
   };
 
   const closeNavbar = () => {
-    setIsNavbarCollapsed(true); // Close navbar after clicking on a navlink
+    setIsNavbarCollapsed(true);
   };
 
   const handleShowModal = (isSignInMode) => {
-    setIsSignIn(isSignInMode); // Set the mode to Sign In if Sign In button is clicked
+    setIsSignIn(isSignInMode);
     setShowModal(true);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setEmailError(''); // Reset errors when modal is closed
+    setEmailError('');
     setPasswordError('');
     setConfirmPasswordError('');
   };
 
   const toggleProfileDropdown = () => {
-    setShowProfileDropdown(!showProfileDropdown); // Toggle dropdown visibility
+    setShowProfileDropdown(!showProfileDropdown);
   };
 
   const handleLogout = () => {
-    // Logic to log out the user (e.g., clearing auth tokens, etc.)
-    console.log('User logged out');
-    setUser(null); // Set user to null after logout
+   // Remove specific data from local storage
+   localStorage.removeItem('userToken');
+  
+   // Optionally, clear all local storage
+   localStorage.clear();
+ 
+   // Redirect user to the login page or home page
+   window.location.href = '/'; // or use React Router's `useNavigate()` for redirection
   };
 
   const handleEmailChange = (e) => {
@@ -75,16 +88,12 @@ function Header() {
     setConfirmPassword(e.target.value);
   };
 
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
   const validateEmail = (email) => {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     return emailPattern.test(email);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let valid = true;
 
     if (!validateEmail(email)) {
@@ -95,7 +104,6 @@ function Header() {
     }
 
     if (isSignIn) {
-      // Sign In Mode
       if (password.length < 6) {
         setPasswordError('Password must be at least 6 characters long.');
         valid = false;
@@ -103,11 +111,6 @@ function Header() {
         setPasswordError('');
       }
     } else {
-      // Register Mode
-      if (name.trim() === '') {
-        valid = false;
-        alert('Name is required');
-      }
       if (password.length < 6) {
         setPasswordError('Password must be at least 6 characters long.');
         valid = false;
@@ -123,14 +126,49 @@ function Header() {
       }
     }
 
+    const userType = isMerchant ? 'merchant' : 'customer';
+
     if (valid) {
-      // Proceed with form submission or next steps
-      console.log('Form is valid.');
-      console.log(isMerchant ? 'Registering as Merchant' : 'Registering as User');
+      try {
+        const userPayload = {
+          email,
+          password,
+          userType,
+        };
+
+        const response = await axios.post('http://localhost:5000/users/auth', userPayload);
+
+        if (response.status === 200) {
+          // showToast({ message: 'User registered successfully!', type: 'success' });
+          showToast('Form submitted successfully!', 'success');
+
+          // Store user data in local storage and update state
+          const registeredUser = {
+            name: 'Lavidu Lakshan', // Replace with actual data from the API
+            imageUrl: 'https://via.placeholder.com/40', // Placeholder image
+            email,
+            userType,
+          };
+          setUser(registeredUser);
+          localStorage.setItem('user', JSON.stringify(registeredUser)); // Store user in local storage
+
+          // Redirect based on user type
+          if (userType === 'merchant') {
+            window.location.href = '/kymregistration';
+          } else if (userType === 'customer') {
+            window.location.href = '/kycregistration';
+          }
+
+          handleCloseModal();
+        } else {
+          setToastMessage({ message: 'Failed to register.', type: 'error' });
+        }
+      } catch (error) {
+        setToastMessage({ message: error.response?.data || 'An error occurred', type: 'error' });
+      }
     }
   };
 
-  // Check if current route is '/userprofile' and hide the buttons
   const hideButtons = location.pathname === '/userprofile';
 
   return (
@@ -138,7 +176,7 @@ function Header() {
       <nav className="navbar navbar-expand-lg fixed-top" style={navbarStyle}>
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
-            <img src={logo} alt="Logo" style={{ maxWidth: '120px' }} /> {/* Replace with your logo */}
+            <img src={logo} alt="Logo" style={{ maxWidth: '120px' }} />
           </a>
           <button
             className="navbar-toggler"
@@ -173,7 +211,6 @@ function Header() {
                 </Link>
               </li>
               {!user ? (
-                // Show Sign In and Register buttons if no user is logged in
                 !hideButtons && (
                   <>
                     <li className="nav-item">
@@ -182,7 +219,7 @@ function Header() {
                         href="#"
                         style={buttonSignInStyle}
                         onClick={() => {
-                          handleShowModal(true); // Open modal in Sign In mode
+                          handleShowModal(true);
                           closeNavbar();
                         }}
                       >
@@ -195,7 +232,7 @@ function Header() {
                         href="#"
                         style={buttonRegisterStyle}
                         onClick={() => {
-                          handleShowModal(false); // Open modal in Register mode
+                          handleShowModal(false);
                           closeNavbar();
                         }}
                       >
@@ -205,19 +242,17 @@ function Header() {
                   </>
                 )
               ) : (
-                // Show user's image and name if a user is logged in
                 <li className="nav-item dropdown d-flex align-items-center position-relative">
                   <img
                     src={user.imageUrl}
                     alt="User"
                     style={{ borderRadius: '50%', width: '40px', height: '40px', cursor: 'pointer' }}
-                    onClick={toggleProfileDropdown} // Toggle dropdown on click
+                    onClick={toggleProfileDropdown}
                   />
                   <span style={{ color: '#333', fontWeight: 'bold', marginLeft: '10px', cursor: 'pointer' }} onClick={toggleProfileDropdown}>
                     {user.name}
                   </span>
 
-                  {/* Dropdown Menu */}
                   {showProfileDropdown && (
                     <ul className="dropdown-menu show" style={dropdownMenuStyle}>
                       <li>
@@ -239,6 +274,9 @@ function Header() {
         </div>
       </nav>
 
+      {/* Toaster Notification */}
+      {toastMessage.message && <Toaster message={toastMessage.message} type={toastMessage.type} />}
+
       {/* Modal Component */}
       {showModal && (
         <div className="modal show d-block" tabIndex="-1" role="dialog" onClick={handleCloseModal}>
@@ -254,36 +292,22 @@ function Header() {
                 </div>
 
                 {!isSignIn && (
-                  <>
-                    {/* Merchant or User Selection */}
-                    <div className="mb-3">
-                      <label htmlFor="role-select" className="form-label">
-                        Register As:
-                      </label>
-                      <select
-                        id="role-select"
-                        className="form-select"
-                        value={isMerchant ? 'merchant' : 'user'}
-                        onChange={(e) => setIsMerchant(e.target.value === 'merchant')}
-                      >
-                        <option value="user">User</option>
-                        <option value="merchant">Merchant</option>
-                      </select>
-                    </div>
-
-                    {/* Name Field */}
-                    <input
-                      type="text"
-                      className="form-control my-3"
-                      placeholder="Full Name"
-                      value={name}
-                      onChange={handleNameChange}
-                      style={inputStyle}
-                    />
-                  </>
+                  <div className="mb-3">
+                    <label htmlFor="role-select" className="form-label">
+                      Register As:
+                    </label>
+                    <select
+                      id="role-select"
+                      className="form-select"
+                      value={isMerchant ? 'merchant' : 'customer'}
+                      onChange={(e) => setIsMerchant(e.target.value === 'merchant')}
+                    >
+                      <option value="customer">Customer</option>
+                      <option value="merchant">Merchant</option>
+                    </select>
+                  </div>
                 )}
 
-                {/* Email Field */}
                 <input
                   type="email"
                   className="form-control my-3"
@@ -294,7 +318,6 @@ function Header() {
                 />
                 {emailError && <p style={errorTextStyle}>{emailError}</p>}
 
-                {/* Password Field with Eye Icon */}
                 <div className="input-group my-3">
                   <input
                     type={showPassword ? 'text' : 'password'}
@@ -315,7 +338,6 @@ function Header() {
 
                 {!isSignIn && (
                   <>
-                    {/* Confirm Password Field with Eye Icon */}
                     <div className="input-group my-3">
                       <input
                         type={showConfirmPassword ? 'text' : 'password'}
@@ -364,16 +386,33 @@ function Header() {
   );
 }
 
-// Styles
+// Toaster Notification Component
+// const Toaster = ({ message, type }) => {
+//   const toasterStyle = {
+//     position: 'fixed',
+//     bottom: '20px',
+//     right: '20px',
+//     zIndex: '9999',
+//     padding: '10px 20px',
+//     backgroundColor: type === 'success' ? '#4CAF50' : '#F44336',
+//     color: '#fff',
+//     borderRadius: '5px',
+//     boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)',
+//   };
+
+//   return <div style={toasterStyle}>{message}</div>;
+// };
+
+// Styles (you can also use a separate CSS file)
 const navbarStyle = {
-  backgroundColor: '#ffffff', // White background for header
+  backgroundColor: '#ffffff',
   padding: '8px 16px',
-  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)', // Subtle shadow to separate header
-  color: '#333', // Darker text for contrast
+  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+  color: '#333',
 };
 
 const linkStyle = {
-  color: '#333', // Dark text color for links
+  color: '#333',
   marginRight: '15px',
   textDecoration: 'none',
   transition: 'color 0.3s ease',
@@ -403,7 +442,7 @@ const modalContentStyle = {
   padding: '20px',
   borderRadius: '10px',
   backgroundColor: '#f3f4f6',
-  boxShadow: '0 5px 15px rgba(0,0,0,0.3)', // Add some depth to the modal
+  boxShadow: '0 5px 15px rgba(0,0,0,0.3)',
 };
 
 const modalBodyStyle = {
@@ -460,7 +499,6 @@ const highlightLabelStyle = {
 const iconStyle = {
   color: '#28a745',
   marginRight: '10px',
-  fontSize: '1.5rem', // Adjust the size of the icons
 };
 
 const forgotPasswordStyle = {
@@ -469,7 +507,6 @@ const forgotPasswordStyle = {
   fontSize: '14px',
 };
 
-// Custom styles for the profile dropdown
 const dropdownMenuStyle = {
   position: 'absolute',
   top: '50px',
