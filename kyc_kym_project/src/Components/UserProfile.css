@@ -97,3 +97,18 @@
         bottom: -50px; /* Adjust position for mobile */
     }
 }
+
+
+/* UserProfile.css */
+
+/* Profile Image Styles */
+.profile-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+}
+
+
+
+/* Additional Styles as Needed */
+

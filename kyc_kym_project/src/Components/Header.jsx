@@ -1,3 +1,4 @@
+// src/components/Header.js
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -6,13 +7,19 @@ import logo from '../images/logo.png';
 import { FaEye, FaEyeSlash, FaShieldAlt, FaUser, FaSignOutAlt } from 'react-icons/fa';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import Toaster from './Toaster ';
+
+
+// import {Toaster } from './Toaster '
+import Toaster from './Toaster '
+import { auth } from '../firebase'; // Import Firebase Auth instance
+import { signInWithEmailAndPassword } from 'firebase/auth'; // Import only signIn method
 
 function Header() {
+
   const location = useLocation();
   const [isNavbarCollapsed, setIsNavbarCollapsed] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [isSignIn, setIsSignIn] = useState(false);
+  const [isSignIn, setIsSignIn] = useState(false); // Track if it's Sign-In or Registration
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -22,24 +29,34 @@ function Header() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isMerchant, setIsMerchant] = useState(false);
-  const [user, setUser] = useState(null); // User state for logged-in user
+  const [user, setUser] = useState(null); // Logged-in user state
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [toastMessage, setToastMessage] = useState({ message: '', type: '' });
 
   const showToast = (message, type) => {
     setToastMessage({ message, type });
 
-    // Set timeout to clear the toast after 3 seconds
+    // Clear the toast after 5 seconds
     setTimeout(() => {
       setToastMessage({ message: '', type: '' });
-    }, 5000); // Change 3000 to the time (in ms) you want the toaster to last
+    }, 5000);
   };
 
   useEffect(() => {
-    // Simulate fetching logged-in user from local storage/session or API
+    // Fetch logged-in user from local storage
     const loggedUser = JSON.parse(localStorage.getItem('user')) || null;
     setUser(loggedUser);
   }, []);
+
+//close this form
+  useEffect(() => {
+    if (location.pathname === '/adminlogin') {
+      setShowModal(false);
+    }
+  }, [location.pathname]);
+//close this form
+
+
 
   const toggleNavbar = () => {
     setIsNavbarCollapsed(!isNavbarCollapsed);
@@ -66,14 +83,10 @@ function Header() {
   };
 
   const handleLogout = () => {
-   // Remove specific data from local storage
-   localStorage.removeItem('userToken');
-  
-   // Optionally, clear all local storage
-   localStorage.clear();
- 
-   // Redirect user to the login page or home page
-   window.location.href = '/'; // or use React Router's `useNavigate()` for redirection
+    localStorage.removeItem('userToken');
+    localStorage.removeItem('user');
+    setUser(null);
+    window.location.href = '/';
   };
 
   const handleEmailChange = (e) => {
@@ -93,9 +106,14 @@ function Header() {
     return emailPattern.test(email);
   };
 
+
+
+
+  // Handle Sign-In and Registration
   const handleSubmit = async () => {
     let valid = true;
 
+    // Validate Email
     if (!validateEmail(email)) {
       setEmailError('Please enter a valid email address.');
       valid = false;
@@ -103,68 +121,143 @@ function Header() {
       setEmailError('');
     }
 
-    if (isSignIn) {
-      if (password.length < 6) {
-        setPasswordError('Password must be at least 6 characters long.');
-        valid = false;
-      } else {
-        setPasswordError('');
-      }
+    // Validate Password
+    if (password.length < 6) {
+      setPasswordError('Password must be at least 6 characters long.');
+      valid = false;
     } else {
-      if (password.length < 6) {
-        setPasswordError('Password must be at least 6 characters long.');
-        valid = false;
-      } else {
-        setPasswordError('');
-      }
-
-      if (password !== confirmPassword) {
-        setConfirmPasswordError('Passwords do not match.');
-        valid = false;
-      } else {
-        setConfirmPasswordError('');
-      }
+      setPasswordError('');
     }
 
-    const userType = isMerchant ? 'merchant' : 'customer';
+    // Validate Confirm Password for Registration
+    if (!isSignIn && password !== confirmPassword) {
+      setConfirmPasswordError('Passwords do not match.');
+      valid = false;
+    } else {
+      setConfirmPasswordError('');
+    }
+    // alert("jkkd")
 
     if (valid) {
-      try {
-        const userPayload = {
-          email,
-          password,
-          userType,
-        };
 
-        const response = await axios.post('http://localhost:5000/users/auth', userPayload);
+      if (isSignIn) {
 
-        if (response.status === 200) {
-          // showToast({ message: 'User registered successfully!', type: 'success' });
-          showToast('Form submitted successfully!', 'success');
+        // Sign-In Logic using Firebase Auth
+        try {
 
-          // Store user data in local storage and update state
-          const registeredUser = {
-            name: 'Lavidu Lakshan', // Replace with actual data from the API
-            imageUrl: 'https://via.placeholder.com/40', // Placeholder image
-            email,
-            userType,
-          };
-          setUser(registeredUser);
-          localStorage.setItem('user', JSON.stringify(registeredUser)); // Store user in local storage
+          const userCredential = await signInWithEmailAndPassword(auth, email, password);
+          const idToken = await userCredential.user.getIdToken(); // Get Firebase ID Token
+          // alert("success");
 
-          // Redirect based on user type
-          if (userType === 'merchant') {
-            window.location.href = '/kymregistration';
-          } else if (userType === 'customer') {
-            window.location.href = '/kycregistration';
+
+          // Send the ID token to your backend for verification
+          const response = await axios.post('http://localhost:5000/api/verifyToken', { idToken });
+
+          console.log(response.data)
+
+
+
+          if (response.status === 200) {
+            const userData = response.data.userData; // Assuming userData is coming from the backend
+            console.log(userData);
+
+            showToast('Logged in successfully!', 'success');
+
+
+
+            // Store user data in local storage and update state
+            const loggedInUser = {
+              // Replace with actual data from the API
+              imageUrl: 'https://firebasestorage.googleapis.com/v0/b/open-kyckym-system.appspot.com/o/images%2Fother_images%2FdefaultProfile.png?alt=media&token=c15e5145-d6a5-4072-992b-338a27972b98', // Placeholder image or fetched from API
+              // userData,
+              // userType: 'customer', // Replace with actual data from the API
+              uid: userData.uid,
+              email: userData.email,
+              userType: userData.userType,
+              detailsSubmitted: userData.detailsSubmitted,  // Replace with actual data from the API
+
+            };
+            setUser(loggedInUser);
+            localStorage.setItem('user', JSON.stringify(loggedInUser)); // Store user in local storage
+            // alert("pk")
+
+            console.log(loggedInUser);
+
+
+
+
+            if (userData.userType === 'customer') {
+              if (userData.detailsSubmitted) {
+                if (userData.adminApproved) {
+                  window.location.href = '/userprofile';
+
+                } else {
+                  alert("pk")
+                  window.location.href = '/approvePending';
+                }
+
+              } else {
+                window.location.href = '/kycRegistration';
+              }
+            } else if (userData.userType === 'merchant') {
+              if (userData.detailsSubmitted) {
+                window.location.href = '/userprofile';
+
+              } else {
+                window.location.href = '/kymregistration';
+              }
+            }
+
+          } else {
+            showToast('Token verification failed.', 'error');
           }
 
-          handleCloseModal();
-        } else {
-          setToastMessage({ message: 'Failed to register.', type: 'error' });
+        } catch (error) {
+          showToast(error.message || 'An error occurred during sign-in', 'error');
         }
-      } catch (error) {
-        setToastMessage({ message: error.response?.data || 'An error occurred', type: 'error' });
+      } else {
+        // Registration Logic via Backend
+        try {
+          const userPayload = {
+            email,
+            password, // Ensure secure handling on the backend (e.g., hashing)
+            userType: isMerchant ? 'merchant' : 'customer',
+          };
+          console.log(userPayload);
+
+          const response = await axios.post('http://localhost:5000/users/auth', userPayload);
+          console.log(response.data);
+
+
+
+          if (response.status === 200) {
+            console.log(response);
+            showToast('User registered successfully!', 'success');
+
+
+            localStorage.setItem('user', JSON.stringify(response.data));
+            setUser(response.data);
+
+
+
+
+            if (userPayload.userType === 'merchant') {
+              setTimeout(() => {
+                window.location.href = '/kymregistration';
+              }, 2000);
+            } else if (userPayload.userType === 'customer') {
+              setTimeout(() => {
+                window.location.href = '/kycregistration';
+              }, 2000);
+            }
+
+            handleCloseModal();
+          } else {
+            showToast('Failed to register.', 'error');
+          }
+        } catch (error) {
+          showToast(error.response?.data || 'An error occurred during registration', 'error');
+        }
       }
     }
   };
@@ -218,7 +311,8 @@ function Header() {
                         className="nav-link btn btn-signin mx-2"
                         href="#"
                         style={buttonSignInStyle}
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.preventDefault(); // Prevent default anchor behavior
                           handleShowModal(true);
                           closeNavbar();
                         }}
@@ -231,7 +325,8 @@ function Header() {
                         className="nav-link btn btn-register"
                         href="#"
                         style={buttonRegisterStyle}
-                        onClick={() => {
+                        onClick={(e) => {
+                          e.preventDefault(); // Prevent default anchor behavior
                           handleShowModal(false);
                           closeNavbar();
                         }}
@@ -244,19 +339,21 @@ function Header() {
               ) : (
                 <li className="nav-item dropdown d-flex align-items-center position-relative">
                   <img
-                    src={user.imageUrl}
+
+
+                    src='https://firebasestorage.googleapis.com/v0/b/open-kyckym-system.appspot.com/o/images%2Fother_images%2FdefaultProfile.png?alt=media&token=c15e5145-d6a5-4072-992b-338a27972b98'
                     alt="User"
                     style={{ borderRadius: '50%', width: '40px', height: '40px', cursor: 'pointer' }}
                     onClick={toggleProfileDropdown}
                   />
-                  <span style={{ color: '#333', fontWeight: 'bold', marginLeft: '10px', cursor: 'pointer' }} onClick={toggleProfileDropdown}>
+                  {/* <span style={{ color: '#333', fontWeight: 'bold', marginLeft: '10px', cursor: 'pointer' }} onClick={toggleProfileDropdown}>
                     {user.name}
-                  </span>
+                  </span> */}
 
                   {showProfileDropdown && (
                     <ul className="dropdown-menu show" style={dropdownMenuStyle}>
                       <li>
-                        <a className="dropdown-item" href="#">
+                        <a className="dropdown-item" href="/userprofile">
                           <FaUser style={iconDropdownStyle} /> Your Profile
                         </a>
                       </li>
@@ -360,14 +457,14 @@ function Header() {
 
                 {isSignIn && (
                   <div className="text-start">
-                    <a href="#" style={forgotPasswordStyle}>
+                    <a href="/forgotpassword" style={forgotPasswordStyle}>
                       Forgot Password?
                     </a>
                   </div>
                 )}
 
                 <button className="btn btn-primary w-100 mb-3" style={continueButtonStyle} onClick={handleSubmit}>
-                  Continue
+                  {isSignIn ? 'Sign In' : 'Register'}
                 </button>
                 <button className="btn btn-google w-100" style={googleButtonStyle}>
                   <i className="fab fa-google"></i> Continue with Google
@@ -378,6 +475,18 @@ function Header() {
                   By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
                 </p>
               </div>
+
+              <Link to="/adminlogin"> 
+                <label htmlFor="">
+                  <i
+                    className="fas fa-user-shield"
+                    style={{ marginRight: '5px', width: '100px', fontSize: '2rem' }}
+                  ></i>
+                </label>
+              </Link>
+
+
+
             </div>
           </div>
         </div>
@@ -386,24 +495,25 @@ function Header() {
   );
 }
 
-// Toaster Notification Component
-// const Toaster = ({ message, type }) => {
-//   const toasterStyle = {
-//     position: 'fixed',
-//     bottom: '20px',
-//     right: '20px',
-//     zIndex: '9999',
-//     padding: '10px 20px',
-//     backgroundColor: type === 'success' ? '#4CAF50' : '#F44336',
-//     color: '#fff',
-//     borderRadius: '5px',
-//     boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)',
-//   };
+// Toaster Notification Component (You can uncomment and use it separately if needed)
+/*
+const Toaster = ({ message, type }) => {
+ const toasterStyle = {
+   position: 'fixed',
+   bottom: '20px',
+   right: '20px',
+   zIndex: '9999',
+   padding: '10px 20px',
+   backgroundColor: type === 'success' ? '#4CAF50' : '#F44336',
+   color: '#fff',
+   borderRadius: '5px',
+   boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)',
+ };
 
-//   return <div style={toasterStyle}>{message}</div>;
-// };
+ return <div style={toasterStyle}>{message}</div>;
+};
+*/
 
-// Styles (you can also use a separate CSS file)
 const navbarStyle = {
   backgroundColor: '#ffffff',
   padding: '8px 16px',

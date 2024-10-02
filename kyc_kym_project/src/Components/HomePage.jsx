@@ -9,11 +9,16 @@ import ApiPurpose from "./ApiPurpose";
 import { useLocation } from 'react-router-dom';
 
 
+
 import data from '../images/back.gif'; // Correct image import
 import WhyChooseUs from "./WhyChooseUs";
+import AnimatedButton from "./AnimatedButton ";
+import Services from "./Services";
+import TypingEffect from "./TypingEffect";
 
 
 const Homepage = () => {
+
 
   const location = useLocation();
 
@@ -35,6 +40,8 @@ const Homepage = () => {
       }
     }
   }, [location]);
+
+  
 
 
   useEffect(() => {
@@ -80,9 +87,10 @@ const Homepage = () => {
 >
   <div className="hero-overlay"></div> {/* Adds a gradient overlay */}
   <div className="hero-content bg-dark bg-opacity-50 p-4 rounded animated fadeInUp" data-aos="fade-up">
-    <h1 className="display-4 text-white hero-title animated fadeInDown" data-aos="fade-down" data-aos-duration="1000">
+    <TypingEffect text="Fast & Secure KYM/KYC Verification" />
+    {/* <h1 className="display-4 text-white hero-title animated fadeInDown" data-aos="fade-down" data-aos-duration="1000">
       Fast & Secure KYM/KYC Verification
-    </h1>
+    </h1> */}
     <p className="lead text-white hero-subtitle animated fadeInRight" data-aos="fade-right" data-aos-delay="300" data-aos-duration="1000">
       Seamless verification process that ensures compliance and trust between businesses and customers.
     </p>
@@ -116,9 +124,13 @@ const Homepage = () => {
         </div>
       </section>
 
+      
+
 
       {/* Services Section */}
-      <section className="services container my-5 text-center" id="service">
+      <Services/>
+    
+      {/* <section className="services container my-5 text-center" id="service">
         <h2 data-aos="fade-up" className="text-primary">Our Services</h2>
         <div className="row my-4">
           <div className="col-12 col-md-4" data-aos="fade-up" data-aos-delay="200">
@@ -143,7 +155,7 @@ const Homepage = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
 
 

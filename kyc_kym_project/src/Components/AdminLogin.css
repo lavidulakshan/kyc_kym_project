@@ -1,0 +1,86 @@
+/* AdminLogin.css */
+
+.login-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f4f4f4;
+}
+
+.login-box {
+    position: relative;
+    width: 350px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    text-align: center;
+}
+
+.login-header h2 {
+    margin-bottom: 20px;
+}
+
+.admin-img {
+    width: 80px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.email-input, .password-input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.icon-wrapper, .eye-icon-wrapper {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.forgot-password {
+    display: block;
+    margin: 10px 0;
+}
+
+.btn-login {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-login:hover {
+    background-color: #45a049;
+}
+
+/* Close icon inside the form */
+.close-icon-wrapper {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.close-icon {
+    cursor: pointer;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.close-icon:hover {
+    color: red;
+}
